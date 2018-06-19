@@ -1,6 +1,8 @@
 package com.qik.demo.es;
 
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.global.GlobalAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
@@ -29,11 +31,15 @@ public class AggregationQuery {
         TermsAggregationBuilder xinzuoGroup = AggregationBuilders.terms("xingzuo_group")
                 .field("galaxy");
 
+        // id不为空
+        FilterAggregationBuilder filter = AggregationBuilders.filter("id", QueryBuilders.boolQuery().mustNot(QueryBuilders.termsQuery("id", "")));
+
         GlobalAggregationBuilder agg = AggregationBuilders
                 .global("gloable_group")
                 .subAggregation(xinzuoGroup)
                 .subAggregation(age05)
-                .subAggregation(age510);
+                .subAggregation(age510)
+                .subAggregation(filter);
         searchSourceBuilder.aggregation(agg);
         System.out.println(searchSourceBuilder);
     }
