@@ -7,17 +7,21 @@ import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
 import org.springframework.batch.core.explore.JobExplorer;
+import org.springframework.batch.core.explore.support.JobExplorerFactoryBean;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobOperator;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.repository.dao.Jackson2ExecutionContextStringSerializer;
+import org.springframework.batch.core.repository.dao.XStreamExecutionContextStringSerializer;
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -84,6 +88,17 @@ public class DBBatchConfig {
         JobRepositoryFactoryBean dbJobFactory = new JobRepositoryFactoryBean();
         dbJobFactory.setTransactionManager(transactionManager);
         dbJobFactory.setDataSource(dataSource);
+        return dbJobFactory.getObject();
+    }
+    @Bean(name = "dbJobExplorer")
+    public JobExplorer dbJobExplorer(PlatformTransactionManager transactionManager,
+                                     @Qualifier("dataSource") DataSource dataSource,
+                                     JdbcOperations jdbcOperations) throws Exception {
+        JobExplorerFactoryBean dbJobFactory = new JobExplorerFactoryBean();
+        dbJobFactory.setDataSource(dataSource);
+        dbJobFactory.setJdbcOperations(jdbcOperations);
+        Jackson2ExecutionContextStringSerializer xStreamExecutionContextStringSerializer = new Jackson2ExecutionContextStringSerializer();
+        dbJobFactory.setSerializer(xStreamExecutionContextStringSerializer);
         return dbJobFactory.getObject();
     }
 }

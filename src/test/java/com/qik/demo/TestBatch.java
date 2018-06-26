@@ -1,4 +1,4 @@
-package com.qik.demo.batch;
+package com.qik.demo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.*;

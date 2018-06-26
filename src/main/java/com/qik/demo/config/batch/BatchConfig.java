@@ -49,12 +49,12 @@ public class BatchConfig {
      * 游标查询会一次拉去所有符合条件数据,可能撑爆内存
      * @param sqlSessionFactory
      * @param queryId
-     * @param <T> 通过{@link org.springframework.batch.core.JobParameter}传入参数
+     * @param {@link org.springframework.batch.core.JobParameter}传入参数
      * @return
      */
     @Bean
     @StepScope
-    public <T> ItemReader<T> reader(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory
+    public ItemReader<Object> reader(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory
             , @Value("#{jobParameters[queryId]}") String queryId) {
         MyBatisCursorItemReader itemReader = new MyBatisCursorItemReader();
         itemReader.setSqlSessionFactory(sqlSessionFactory);
@@ -95,7 +95,7 @@ public class BatchConfig {
      */
     @Bean
     @StepScope
-    public <F> ItemWriter<F> writer(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory
+    public ItemWriter<Object> writer(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory
             , @Value("#{jobParameters[statementId]}") String statementId) {
         MyBatisBatchItemWriter itemWriter = new MyBatisBatchItemWriter();
         itemWriter.setSqlSessionFactory(sqlSessionFactory);
@@ -104,10 +104,10 @@ public class BatchConfig {
     }
 
     @Bean
-    public <T,F> ItemProcessor<T, F> processor() {
+    public ItemProcessor<Object, Object> processor() {
         return writerObject -> {
             // TODO reader到writer转换
-            return (F)writerObject;
+            return writerObject;
         };
     }
     /**
