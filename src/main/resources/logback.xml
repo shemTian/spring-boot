@@ -12,7 +12,7 @@
 
 	<appender name="infoAppender"
 			  class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.dir}/logs/${HOSTNAME}_${projectname}.log</file>
+		<file>${log.dir}/logs/${projectname}.log</file>
 	<!--	<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>INFO</level>
 			<onMatch>ACCEPT</onMatch>
@@ -22,7 +22,7 @@
 			<level>INFO</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/logs/${HOSTNAME}_${projectname}-%d{yyyy-MM-dd}.log
+			<fileNamePattern>${log.dir}/logs/${projectname}-%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
@@ -33,12 +33,12 @@
 
 	<appender name="errorAppender"
 			  class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${log.dir}/logs/${HOSTNAME}_${projectname}_error.log</file>
+		<file>${log.dir}/logs/${projectname}_error.log</file>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>WARN</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/logs/${HOSTNAME}_${projectname}_error-%d{yyyy-MM-dd}.log
+			<fileNamePattern>${log.dir}/logs/${projectname}_error-%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>

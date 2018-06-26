@@ -25,7 +25,11 @@ public class RandomController {
         List<Integer> returnList = new ArrayList<>(5);
         Random random = new Random();
         for(int i=0;i<5;i++) {
-            returnList.add(random.nextInt(to)+1);
+            int thisRandom = random.nextInt(to)+ 1;
+            while (returnList.contains(thisRandom)) {
+                thisRandom = random.nextInt(to)+ 1;
+            }
+            returnList.add(thisRandom);
         }
         Collections.sort(returnList);
         return returnList;
