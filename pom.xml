@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.qik</groupId>
-	<artifactId>demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>search-every-thing</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>spring-boot</name>
+	<name>search-every-thing</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -88,6 +88,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+
 	</build>
 
 
