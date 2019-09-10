@@ -30,7 +30,7 @@ import java.util.Map;
  * 创建时间 2018/5/16 15:44
  **/
 @Configuration
-@EnableBatchProcessing
+//@EnableBatchProcessing
 @Slf4j
 public class BatchConfig {
     /**
